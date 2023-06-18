@@ -5,8 +5,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SignUp = () => {
+  // getting global data using context
   const [api, contextHolder] = notification.useNotification();
+  const navigate = useNavigate();
 
+  // function calls on Signup
   const onFinish = (values) => {
     let data = JSON.stringify({
       name: values.username,
@@ -30,7 +33,7 @@ const SignUp = () => {
           message: `Account Registered Successfully`,
           description: "Check your email for password",
           placement: "topRight",
-          duration:2,
+          duration: 2,
         });
       })
       .catch((error) => {
@@ -39,13 +42,10 @@ const SignUp = () => {
           message: error.response.data.message,
           description: "Try Again...",
           placement: "topRight",
-          duration:3,
+          duration: 3,
         });
       });
   };
-
-  const navigate = useNavigate();
-
   return (
     <div
       style={{
