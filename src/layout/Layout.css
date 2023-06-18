@@ -1,0 +1,22 @@
+.layout {
+    height: 100vh;
+    background: linear-gradient(to right, #70e1f5, #ffd194);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.title{
+    color: white;
+    cursor: pointer;
+}
+
+.site-layout-content{
+    height: 80vh;
+}
+
+.footer{
+    text-align: center;
+}
