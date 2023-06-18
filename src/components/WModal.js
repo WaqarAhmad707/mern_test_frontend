@@ -1,16 +1,17 @@
-import { Modal } from 'antd';
+import { Modal } from "antd";
 
-const WModal = ({isOpen, title, onCancel, children}) => {
+// Modal component
+const WModal = ({ isOpen, title, onCancel, children }) => {
   return (
-      <Modal
-        title={title}
-        centered
-        open={isOpen}
-        onCancel={() => onCancel(false)}
-        footer={null}
-      >
-        {children}
-      </Modal>
+    <Modal
+      title={title}
+      centered
+      open={isOpen}
+      onCancel={() => onCancel(false)}
+      footer={null}
+    >
+      {children}
+    </Modal>
   );
 };
 export default WModal;
