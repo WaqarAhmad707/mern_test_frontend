@@ -1,6 +1,6 @@
 import { Button, Form, Input, Space, Table, Tag, notification } from "antd";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { AppContext } from "../context/AppContext";
 import WModal from "../components/WModal";
@@ -31,19 +31,19 @@ const Cars = () => {
       title: "Color",
       dataIndex: "color",
       key: "color",
-      sorter: (a, b) => a.color - b.color,
+      sorter: (a, b) => a.color.length - b.color.length,
     },
     {
       title: "Model",
       dataIndex: "model",
       key: "model",
-      sorter: (a, b) => a.model - b.model,
+      sorter: (a, b) => a.model.length - b.model.length,
     },
     {
       title: "Make",
       dataIndex: "make",
       key: "make",
-      sorter: (a, b) => a.make - b.make,
+      sorter: (a, b) => a.make.length - b.make.length,
     },
     {
       title: "Category",
@@ -154,7 +154,7 @@ const Cars = () => {
     setModel(value.model);
 
     form.setFieldsValue({
-      "category": value.category._id,
+      "category": value.category?._id,
       "color": value.color,
       "make": value.make,
       "registrationNo": value.registrationNo,
