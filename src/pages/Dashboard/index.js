@@ -2,14 +2,17 @@ import { Button } from "antd";
 import axios from "axios";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../context/AppContext";
+import { AppContext } from "../../context/AppContext";
 import { CarOutlined, OrderedListOutlined } from "@ant-design/icons";
+import "./index.css";
 
 const Dashboard = () => {
+  // getting global data using context
   const { cars, setCars, setCategories } = useContext(AppContext);
   const navigate = useNavigate();
 
   useEffect(() => {
+    // calling get all cars API
     let config1 = {
       method: "get",
       maxBodyLength: Infinity,
@@ -28,6 +31,7 @@ const Dashboard = () => {
         console.log(error);
       });
 
+    // calling get all categories API
     let config2 = {
       method: "get",
       maxBodyLength: Infinity,
@@ -48,27 +52,8 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
-    >
-      <div
-        style={{
-          width: 900,
-          fontSize: 74,
-          fontWeight: "bold",
-          fontFamily: "monospace",
-          marginTop: 50,
-          padding: 20,
-          border: "1px solid black",
-          borderRadius: 20,
-        }}
-      >
-        Registered Cars: {cars.length}
-      </div>
+    <div>
+      <div className="counter">Registered Cars: {cars.length}</div>
 
       <div
         style={{
@@ -80,12 +65,7 @@ const Dashboard = () => {
       >
         <Button
           type="primary"
-          style={{
-            margin: 10,
-            height: "auto",
-            width: 200,
-            fontSize: 24,
-          }}
+          className="btns"
           onClick={() => navigate("/cars")}
         >
           <CarOutlined />
@@ -93,12 +73,7 @@ const Dashboard = () => {
         </Button>
         <Button
           type="primary"
-          style={{
-            margin: 10,
-            height: "auto",
-            width: 200,
-            fontSize: 24,
-          }}
+          className="btns"
           onClick={() => navigate("/categories")}
         >
           <OrderedListOutlined />
