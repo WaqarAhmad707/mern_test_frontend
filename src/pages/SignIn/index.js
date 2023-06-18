@@ -3,12 +3,14 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { AppContext } from "../context/AppContext";
+import { AppContext } from "../../context/AppContext";
 
 const SignIn = () => {
+  // getting global data using context
   const [api, contextHolder] = notification.useNotification();
   const { login } = useContext(AppContext);
 
+  // function calls on Signin
   const onFinish = (values) => {
     let data = JSON.stringify({
       email: values.email,
@@ -32,7 +34,7 @@ const SignIn = () => {
           placement: "topRight",
           duration: 2,
         });
-        login(response.data.token)
+        login(response.data.token);
       })
       .catch((error) => {
         console.log(error);
