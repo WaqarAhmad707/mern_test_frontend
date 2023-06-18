@@ -1,0 +1,13 @@
+.container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+}
+
+.category-input{
+    width: 200px;
+}
+.btn{
+    margin: 10px;
+    float: right;
+}

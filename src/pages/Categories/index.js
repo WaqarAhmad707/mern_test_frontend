@@ -2,16 +2,23 @@ import { Button, Input, Space, Table, notification } from "antd";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { AppContext } from "../context/AppContext";
+import { AppContext } from "../../context/AppContext";
+import "./index.css";
 
 const Categories = () => {
+  // getting global data using context
   const { categories, setCategories } = useContext(AppContext);
+
+  // component states
   const [category, setCategory] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [updateCategory, setUpdateCategory] = useState(null);
+
+  // using antd notification for alerts
   const [api, contextHolder] = notification.useNotification();
 
+  // data table columns
   const columns = [
     {
       title: "ID#",
@@ -28,7 +35,7 @@ const Categories = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button onClick={() => onEditClick(record)}>
+          <Button onClick={() => onEditButtonClick(record)}>
             <EditOutlined />
           </Button>
           <Button danger onClick={() => onDelete(record._id)}>
@@ -39,7 +46,8 @@ const Categories = () => {
     },
   ];
 
-  const onAdd = () => {
+  // function calls Add API
+  const onAddAPI = () => {
     let data = JSON.stringify({
       name: category,
     });
@@ -75,13 +83,15 @@ const Categories = () => {
       });
   };
 
-  const onEditClick = (record) => {
+  // function calls on Edit button
+  const onEditButtonClick = (record) => {
     setIsEdit(true);
     setUpdateCategory(record.name);
     setSelectedCategory(record);
   };
 
-  const onEdit = (record) => {
+  // function calls Edit API
+  const onEditAPI = (record) => {
     let data = JSON.stringify({
       name: updateCategory,
     });
@@ -123,6 +133,7 @@ const Categories = () => {
       });
   };
 
+  // function calls Delete API
   const onDelete = (id) => {
     let config = {
       method: "delete",
@@ -156,18 +167,10 @@ const Categories = () => {
   return (
     <>
       {contextHolder}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "baseline",
-        }}
-      >
+      <div className="container">
         <Input
           placeholder={"Category Name"}
-          style={{
-            width: 200,
-          }}
+          className="category-input"
           value={isEdit ? updateCategory : category}
           onChange={(e) =>
             isEdit
@@ -177,11 +180,8 @@ const Categories = () => {
         />
         <Button
           type="dashed"
-          style={{
-            margin: 10,
-            float: "right",
-          }}
-          onClick={() => (isEdit ? onEdit(selectedCategory) : onAdd())}
+          className="btn"
+          onClick={() => (isEdit ? onEditAPI(selectedCategory) : onAddAPI())}
         >
           {isEdit ? "Update Category" : "Add Category"}
         </Button>
