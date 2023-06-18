@@ -1,0 +1,10 @@
+.side-btn{
+    margin: 10px;
+    float: right;
+}
+
+.add-btn{
+    display: flex;
+    justify-content: center;
+}
+

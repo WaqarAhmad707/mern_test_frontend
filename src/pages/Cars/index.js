@@ -2,13 +2,19 @@ import { Button, Form, Input, Space, Table, Tag, notification } from "antd";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { AppContext } from "../context/AppContext";
-import WModal from "../components/WModal";
-import WSelect from "../components/WSelect";
+import { AppContext } from "../../context/AppContext";
+import WModal from "../../components/WModal";
+import WSelect from "../../components/WSelect";
+import "./index.css";
 
 const Cars = () => {
+  // getting global data using context
   const { cars, setCars } = useContext(AppContext);
+
+  // using antd notification for alerts
   const [api, contextHolder] = notification.useNotification();
+
+  // component states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [selectedCar, setSelectedCar] = useState(null);
@@ -18,8 +24,10 @@ const Cars = () => {
   const [color, setColor] = useState(null);
   const [registrationNo, setRegistrationNo] = useState(null);
 
+  // using form for access it fields
   const [form] = Form.useForm();
 
+  // data table columns
   const columns = [
     {
       title: "Registration#",
@@ -81,6 +89,7 @@ const Cars = () => {
     },
   ];
 
+  // function to clear all fields
   const clearAllFields = () => {
     setCategory(null);
     setColor(null);
@@ -90,12 +99,14 @@ const Cars = () => {
     form.resetFields();
   };
 
+  // function calls on Add button
   const onAddButtonClick = () => {
     setIsEdit(false);
     setIsModalOpen(true);
     clearAllFields();
   };
 
+  // function calls Add API
   const onAddAPICall = (values) => {
     let data = JSON.stringify({
       category: values.category,
@@ -138,10 +149,12 @@ const Cars = () => {
       });
   };
 
+  // function that access selected category
   const onChangeCategory = (value) => {
     setCategory(value);
   };
 
+  // function calls on Edit button
   const onEditButtonClick = (value) => {
     setSelectedCar(value);
     setIsEdit(true);
@@ -154,14 +167,15 @@ const Cars = () => {
     setModel(value.model);
 
     form.setFieldsValue({
-      "category": value.category?._id,
-      "color": value.color,
-      "make": value.make,
-      "registrationNo": value.registrationNo,
-      "model": value.model,
+      category: value.category?._id,
+      color: value.color,
+      make: value.make,
+      registrationNo: value.registrationNo,
+      model: value.model,
     });
   };
 
+  // function calls Edit API
   const onEditAPICall = (record) => {
     let data = JSON.stringify({
       category: category,
@@ -197,7 +211,7 @@ const Cars = () => {
         setIsEdit(false);
         setIsModalOpen(false);
         setSelectedCar(null);
-        clearAllFields()
+        clearAllFields();
       })
       .catch((error) => {
         api.error({
@@ -209,6 +223,7 @@ const Cars = () => {
       });
   };
 
+  // function calls Delete API
   const onDeleteAPICall = (id) => {
     let config = {
       method: "delete",
@@ -307,12 +322,7 @@ const Cars = () => {
             />
           </Form.Item>
 
-          <Form.Item
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
+          <Form.Item className="add-btn">
             <Button
               type="primary"
               htmlType="submit"
@@ -324,24 +334,9 @@ const Cars = () => {
         </Form>
       </WModal>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "baseline",
-        }}
-      >
-        <Button
-          type="dashed"
-          style={{
-            margin: 10,
-            float: "right",
-          }}
-          onClick={onAddButtonClick}
-        >
-          Add Car
-        </Button>
-      </div>
+      <Button type="dashed" className="side-btn" onClick={onAddButtonClick}>
+        Add Car
+      </Button>
       <Table columns={columns} dataSource={cars} />
     </>
   );
